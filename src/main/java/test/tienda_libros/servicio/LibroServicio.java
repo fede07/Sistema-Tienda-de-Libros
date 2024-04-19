@@ -3,10 +3,12 @@ package test.tienda_libros.servicio;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-
+import org.springframework.stereotype.Service;
 import test.tienda_libros.modelo.Libro;
 import test.tienda_libros.repositorio.LibroRepositorio;
 
+
+@Service
 public class LibroServicio implements ILibroServicio{
 
     @Autowired
@@ -14,12 +16,13 @@ public class LibroServicio implements ILibroServicio{
 
     @Override
     public List<Libro> listarLibros() {
-       return libroRepositorio.findAll();
+        return libroRepositorio.findAll();
     }
 
     @Override
-    public Libro buscarLibro(Integer idLibro) {
-        return libroRepositorio.findById(idLibro).orElse(null);
+    public Libro buscarLibroPorId(Integer idLibro) {
+        Libro libro = libroRepositorio.findById(idLibro).orElse(null);
+        return libro;
     }
 
     @Override

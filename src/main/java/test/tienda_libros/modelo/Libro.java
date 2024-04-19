@@ -11,15 +11,15 @@ import lombok.ToString;
 
 @Entity
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @ToString
 public class Libro {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Integer idLibro;
-    String titulo;
+    String nombreLibro;
     String autor;
     Double precio;
-    Integer stock;
+    Integer existencias;
 }

@@ -1,13 +1,27 @@
 package test.tienda_libros;
 
-import org.springframework.boot.SpringApplication;
+import java.awt.EventQueue;
+
+import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.context.ConfigurableApplicationContext;
+
+import test.tienda_libros.vista.LibroForm;
 
 @SpringBootApplication
 public class TiendaLibrosApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(TiendaLibrosApplication.class, args);
+		ConfigurableApplicationContext context =
+		 	new SpringApplicationBuilder(TiendaLibrosApplication.class)
+			.headless(false)
+			.web(WebApplicationType.NONE)
+			.run(args);
+		EventQueue.invokeLater(()->{
+			LibroForm libroForm = context.getBean(LibroForm.class);
+			libroForm.setVisible(true);
+		});
 	}
 
 }
