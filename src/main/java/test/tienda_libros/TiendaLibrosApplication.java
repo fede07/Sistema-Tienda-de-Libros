@@ -9,6 +9,11 @@ import org.springframework.context.ConfigurableApplicationContext;
 
 import test.tienda_libros.vista.LibroForm;
 
+/**
+	 * The main entry point for the TiendaLibrosApplication.
+	 * It starts the Spring application context and displays the LibroForm.
+**/
+
 @SpringBootApplication
 public class TiendaLibrosApplication {
 

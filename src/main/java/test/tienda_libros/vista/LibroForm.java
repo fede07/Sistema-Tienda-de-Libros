@@ -13,6 +13,14 @@ import org.springframework.stereotype.Component;
 import test.tienda_libros.modelo.Libro;
 import test.tienda_libros.servicio.LibroServicio;
 
+/**
+ * The LibroForm class represents a form for managing books in a book store system.
+ * It extends the JFrame class and provides functionality for adding, modifying, and deleting books.
+ * The form displays a table of books and allows the user to select a book to view or modify its details.
+ * The form also provides fields for entering the title, author, price, and stock of a book to be added or modified.
+ * The LibroForm class uses the LibroServicio class to interact with the book store system's data.
+ */
+
 @Component
 public class LibroForm extends JFrame{
     LibroServicio libroServicio;
@@ -27,6 +35,12 @@ public class LibroForm extends JFrame{
     private JButton modificarButton;
     private JButton eliminarButton;
     private DefaultTableModel modeloTablaLibros;
+
+    /**
+     * Constructs a new instance of the LibroForm class.
+     * 
+     * @param libroServicio the LibroServicio object used for interacting with the libro service
+     */
 
     @Autowired
     public LibroForm(LibroServicio libroServicio){
@@ -47,6 +61,11 @@ public class LibroForm extends JFrame{
 
     }
 
+    /**
+     * Sets up the form and initializes the GUI components.
+     * Sets the content pane, default close operation, visibility, and size of the frame.
+     * Calculates the center position of the screen and sets the location of the frame accordingly.
+     */
     private void iniciarForma(){
         setContentPane(panel);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -58,6 +77,13 @@ public class LibroForm extends JFrame{
         int y = (screenSize.height = getHeight() / 2);
         setLocation(x, y);
     }
+
+    /**
+     * Adds a new book to the bookstore system.
+     * Validates the input fields and creates a new book object with the provided information.
+     * Saves the book using the libroServicio instance, displays a success message, and updates the book list.
+     * Clears the form fields after adding the book.
+     */
 
     private void agregarLibro(){
         if(tituloTexto.getText().isEmpty())
@@ -78,6 +104,10 @@ public class LibroForm extends JFrame{
         listarLibros();
     }
 
+    /**
+     * Loads the selected book's information into the form fields.
+     */
+
     private void cargarLibroSeleccionado(){
         var row = tablaLibros.getSelectedRow();
         if(row != -1){
@@ -94,6 +124,13 @@ public class LibroForm extends JFrame{
         }
     }
 
+    /**
+     * Modifies a book in the book store system.
+     * If the ID field is empty, it displays an error message.
+     * Otherwise, it checks if the title field is empty. If so, it displays an error message and sets focus on the title field.
+     * If all fields are filled, it retrieves the values from the input fields, creates a new book object, and saves it using the book service.
+     * Finally, it displays a success message, clears the form, and updates the list of books.
+     */
     private void modificarLibro(){
         if(this.idTexto.getText().isEmpty()){
             mostrarMensaje("Debe seleccionar un registro");
@@ -116,6 +153,13 @@ public class LibroForm extends JFrame{
         }
     }
 
+    /**
+     * Deletes a book from the system.
+     * If a book is selected in the table, it retrieves the book's ID and uses it to delete the book from the system.
+     * After deleting the book, it displays a success message, clears the form, and updates the book list.
+     * If no book is selected, it displays an error message.
+     */
+
     void eliminarLibro(){
         var row = tablaLibros.getSelectedRow();
         if(row != -1){
@@ -131,9 +175,19 @@ public class LibroForm extends JFrame{
         }
     }
 
+    /**
+     * Displays a message dialog with the given message.
+     *
+     * @param mensaje the message to be displayed
+     */
+
     private void mostrarMensaje(String mensaje){
         JOptionPane.showMessageDialog(this, mensaje);
     }
+
+    /**
+     * Clears the form by resetting the text fields for title, author, price, and stock.
+     */
 
     private void limpiarFormulario(){
         tituloTexto.setText("");
@@ -141,6 +195,12 @@ public class LibroForm extends JFrame{
         precioTexto.setText("");
         stockTexto.setText("");
     }
+
+    /**
+     * Creates the UI components for the LibroForm class.
+     * This method initializes the JTextField, DefaultTableModel, JTable, and sets the column identifiers.
+     * It also sets the selection mode for the JTable and calls the listarLibros method.
+     */
 
     private void createUIComponents() {
         idTexto = new JTextField();
@@ -156,9 +216,11 @@ public class LibroForm extends JFrame{
         this.tablaLibros = new JTable(modeloTablaLibros);
         tablaLibros.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         listarLibros();
-
     }
 
+    /**
+     * Retrieves a list of books from the book service and populates the table with the book data.
+     */
     private void listarLibros(){
         modeloTablaLibros.setRowCount(0);
         var libros = libroServicio.listarLibros();
